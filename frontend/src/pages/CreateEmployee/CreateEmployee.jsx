@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 /* REDUX */
-import {useSelector, useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { createEmployee } from '../../redux/employee/actionEmployee';
 
 /* CSS */
@@ -12,15 +12,17 @@ import './CreateEmployee.css';
 
 const CreateEmployee = () => {
 
-    const state = useSelector(state => state);
     const dispatch = useDispatch();
 
     const {register, handleSubmit, formState: { errors }, getValues} = useForm();
 
     function submit(data) {
+        let index = localStorage.getItem('employes') ? localStorage.getItem('employes').length + 1 : 1;
+        localStorage.getItem('employes') && console.log(JSON.stringify(localStorage.getItem('employes')).length)
+        let copyData = {...data, id: `${index}`};
         
-        dispatch(createEmployee(data));
-        console.log(state);
+        console.log(copyData)
+        dispatch(createEmployee(copyData));
     }
 
     return (
@@ -32,26 +34,26 @@ const CreateEmployee = () => {
                  <Link to='/employee-list'>View Current Employees</Link>
                 <h2>Create Employee</h2>
                 <form id="create-employee" onSubmit={handleSubmit(submit)}>
-                     <label htmlFor="first-name">First Name</label>
-                    <input type="text" id="first-name" name='first-name' {...register('first-name')}/>
+                     <label htmlFor="firstName">First Name</label>
+                    <input type="text" id="firstName" name='firstName' {...register('firstName')}/>
 
-                    <label htmlFor="last-name">Last Name</label>
-                    <input type="text" id="last-name" name='last-name' {...register('last-name')} />
+                    <label htmlFor="lastName">Last Name</label>
+                    <input type="text" id="lastName" name='lastName' {...register('lastName')} />
 
-                    <label htmlFor="date-of-birth">Date of Birth</label>
-                    <input id="date-of-birth" type="text" name='date-of-birth' {...register('date-of-birth')}/>
+                    <label htmlFor="dateOfBirth">Date of Birth</label>
+                    <input id="dateOfBirth" type="text" name='dateOfBirth' {...register('dateOfBirth')}/>
 
-                    <label htmlFor="start-date">Start Date</label>
-                    <input id="start-date" type="text" name='start-date' {...register('start-date')}/>
+                    <label htmlFor="startDate">Start Date</label>
+                    <input id="startDate" type="text" name='startDate' {...register('startDate')}/>
 
                     <fieldset className="address" >
                         <legend>Address</legend>
 
                         <label htmlFor="street">Street</label>
-                        <input id="street" type="text" />
+                        <input id="street" type="text" {...register('street')} />
 
                         <label htmlFor="city">City</label>
-                        <input id="city" type="text" />
+                        <input id="city" type="text" {...register('city')} />
 
                         <label htmlFor="state">State</label>
                         <select name="state" id="state" {...register('state')}>
@@ -62,8 +64,8 @@ const CreateEmployee = () => {
                             <option>BELGIUM</option>
                         </select>
 
-                        <label htmlFor="zip-code">Zip Code</label>
-                        <input id="zip-code" type="number" />
+                        <label htmlFor="zipCode">Zip Code</label>
+                        <input id="zipCode" type="number" {...register('zipCode')} />
                     </fieldset>
 
                     <label htmlFor="department">Department</label>

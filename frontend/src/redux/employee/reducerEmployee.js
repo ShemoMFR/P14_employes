@@ -1,11 +1,17 @@
 import { types } from './type';
 
-const initialState = localStorage.getItem('employes') ? JSON.parse(localStorage.getItem('employee')) : [];
+let initialState = [];
 
 const reducerEmployee = (state = initialState, action) => {
+
+    if (localStorage.getItem('employes')) {
+        state = JSON.parse(localStorage.getItem('employes'))
+    };
+
     switch (action.type) {
         case types.CREATE_EMPLOYEE:
-            state.length = 0 ? state = action.payload : state.push(action.payload);
+            console.log(state);
+            state.push({...action.payload});
             localStorage.setItem('employes', JSON.stringify(state));
             return state;
         default:
