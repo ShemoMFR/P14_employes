@@ -4,15 +4,10 @@ let initialState = [];
 
 const reducerEmployee = (state = initialState, action) => {
 
-    if (localStorage.getItem('employes')) {
-        state = JSON.parse(localStorage.getItem('employes'))
-    };
-
     switch (action.type) {
         case types.CREATE_EMPLOYEE:
-            console.log(state);
-            state.push({...action.payload});
-            localStorage.setItem('employes', JSON.stringify(state));
+            state = [...state, action.payload];
+            console.log(state.length);
             return state;
         default:
             return state;

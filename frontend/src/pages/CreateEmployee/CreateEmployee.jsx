@@ -1,10 +1,10 @@
 /* LIBRAIRIES */
-import React from 'react';
+import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 /* REDUX */
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createEmployee } from '../../redux/employee/actionEmployee';
 
 /* CSS */
@@ -13,15 +13,14 @@ import './CreateEmployee.css';
 const CreateEmployee = () => {
 
     const dispatch = useDispatch();
+    const state = useSelector(state => state);
 
     const {register, handleSubmit, formState: { errors }, getValues} = useForm();
+    const [userCreated, setUserCreated] = useState(false);
 
     function submit(data) {
-        let index = localStorage.getItem('employes') ? localStorage.getItem('employes').length + 1 : 1;
-        localStorage.getItem('employes') && console.log(JSON.stringify(localStorage.getItem('employes')).length)
-        let copyData = {...data, id: `${index}`};
-        
-        console.log(copyData)
+        setUserCreated(true)
+        let copyData = {...data, id: `${state.length + 1}`};
         dispatch(createEmployee(copyData));
     }
 
@@ -80,7 +79,9 @@ const CreateEmployee = () => {
                 </form>
 
             </div>
-            <div id="confirmation" className="modal">Employee Created!</div>
+            {
+                userCreated && <div id="confirmation" className="modal">Employee Created!</div>
+            }
         </>
     )
 };
