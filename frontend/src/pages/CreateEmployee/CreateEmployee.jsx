@@ -40,10 +40,10 @@ const CreateEmployee = () => {
                     <input type="text" id="lastName" name='lastName' {...register('lastName')} />
 
                     <label htmlFor="dateOfBirth">Date of Birth</label>
-                    <input id="dateOfBirth" type="text" name='dateOfBirth' {...register('dateOfBirth')}/>
+                    <input id="dateOfBirth" type="date" name='dateOfBirth' {...register('dateOfBirth')}/>
 
                     <label htmlFor="startDate">Start Date</label>
-                    <input id="startDate" type="text" name='startDate' {...register('startDate')}/>
+                    <input id="startDate" type="date" name='startDate' {...register('startDate')}/>
 
                     <fieldset className="address" >
                         <legend>Address</legend>

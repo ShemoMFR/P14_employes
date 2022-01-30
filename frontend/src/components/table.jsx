@@ -19,7 +19,7 @@ export default function DataTable({ datas }) {
     const rows = datas;
      
     return (
-        <div style={{ height: 500, width: '80%' }}>
+        <div style={{ height: 300, width: '80%' }}>
             <DataGrid
                 rows={rows}
                 columns={columns}
