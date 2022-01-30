@@ -3,6 +3,11 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
+/* MUI */ 
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+
 /* REDUX */
 import { useDispatch, useSelector } from 'react-redux';
 import { createEmployee } from '../../redux/employee/actionEmployee';
@@ -10,18 +15,32 @@ import { createEmployee } from '../../redux/employee/actionEmployee';
 /* CSS */
 import './CreateEmployee.css';
 
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+
 const CreateEmployee = () => {
 
     const dispatch = useDispatch();
     const state = useSelector(state => state);
 
     const {register, handleSubmit, formState: { errors }, getValues} = useForm();
-    const [userCreated, setUserCreated] = useState(false);
+
+    const [open, setOpen] = useState(false);
+    const handleClose = () => setOpen(false);
 
     function submit(data) {
-        setUserCreated(true)
         let copyData = {...data, id: `${state.length + 1}`};
         dispatch(createEmployee(copyData));
+        setOpen(true)
     }
 
     return (
@@ -32,7 +51,7 @@ const CreateEmployee = () => {
             <div className="container">
                  <Link to='/employee-list'>View Current Employees</Link>
                 <h2>Create Employee</h2>
-                <form id="create-employee" onSubmit={handleSubmit(submit)}>
+                <form id="create-employee" onSubmit={handleSubmit(submit)} style={{marginBottom: '200px'}}>
                      <label htmlFor="firstName">First Name</label>
                     <input type="text" id="firstName" name='firstName' {...register('firstName')}/>
 
@@ -78,10 +97,25 @@ const CreateEmployee = () => {
                     <button >Save</button> 
                 </form>
 
+            </div >
+
+            <div>
+                <Modal
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
+                >
+                    <Box sx={style}>
+                    <Typography id="modal-modal-title" variant="h6" component="h2">
+                        Utilisateur créé !
+                    </Typography>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        Vous venez d'ajouter un utilisateur à la base de donnés
+                    </Typography>
+                    </Box>
+                </Modal>
             </div>
-            {
-                userCreated && <div id="confirmation" className="modal">Employee Created!</div>
-            }
         </>
     )
 };
