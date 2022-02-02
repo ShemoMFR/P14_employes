@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 /* COMPONENTS */
-import DataTable from '../../components/table'
+import DataTable from '../../components/Table/table'
 
 /* REDUX */
 import { useSelector } from 'react-redux';

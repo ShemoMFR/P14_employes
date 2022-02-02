@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createEmployee } from '../../redux/employee/actionEmployee';
 
 /* COMPONENTS */
-import Modal from '../../components/Modal/Modal';
+import { Modal } from 'modal-bg';
 
 /* CSS */
 import './CreateEmployee.css';
@@ -92,6 +92,6 @@ const CreateEmployee = () => {
             />
         </>
     )
-};
+}
 
 export default CreateEmployee;
